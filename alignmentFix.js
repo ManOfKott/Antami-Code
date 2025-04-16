@@ -1,3 +1,5 @@
+console.log("Test message");
+
 Weglot.initialize({
   api_key: "wg_346e327cd0357ce42ed025741527aa6f8",
 });

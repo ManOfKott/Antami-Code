@@ -70,6 +70,7 @@ function initPixiAnimation({
       const frameNumber = String(i).padStart(pad, "0");
       const langPlaceholder = multiLang ? `${lang}/` : "";
       const url = `https://medien-antami.b-cdn.net/PNG%20sequences/${animationName}/${langPlaceholder}${baseFilename}${frameNumber}.png`;
+      console.log("Loading frame:", url);
       frames.push(PIXI.Texture.from(url));
     }
 

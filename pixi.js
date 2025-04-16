@@ -30,6 +30,8 @@ function initPixiAnimation({
       1
     ).padStart(pad, "0")}.png`;
 
+    console.log("Loading first frame:", firstFrameUrl);
+
     const img = new Image();
     img.onload = function () {
       const aspectRatio = img.width / img.height;

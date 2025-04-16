@@ -30,8 +30,6 @@ function initPixiAnimation({
       1
     ).padStart(pad, "0")}.png`;
 
-    console.log("Loading first frame:", firstFrameUrl);
-
     const img = new Image();
     img.onload = function () {
       const aspectRatio = img.width / img.height;
@@ -70,7 +68,7 @@ function initPixiAnimation({
     const frames = [];
     for (let i = 1; i <= frameCount; i++) {
       const frameNumber = String(i).padStart(pad, "0");
-      const url = `https://medien-antami.b-cdn.net/PNG%20sequences/${baseFilename}/${baseFilename}${frameNumber}.png`;
+      const url = `https://medien-antami.b-cdn.net/PNG%20sequences/${animationName}/${langPlaceholder}${baseFilename}${frameNumber}.png`;
       frames.push(PIXI.Texture.from(url));
     }
 

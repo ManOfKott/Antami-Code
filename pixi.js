@@ -1,11 +1,14 @@
 function initPixiAnimation({
-  containerId,
   frameCount,
   baseFilename,
+  animationName,
+  containerId,
   fps = 25,
   pad = 3,
   maxAttempts = 100,
   interval = 50,
+  multiLang = false,
+  lang = "ar",
 }) {
   let attempts = 0;
 
@@ -22,7 +25,8 @@ function initPixiAnimation({
     }
 
     // Load first frame to get aspect ratio and set width
-    const firstFrameUrl = `https://medien-antami.b-cdn.net/PNG%20sequences/${baseFilename}/${baseFilename}${String(
+    const langPlaceholder = multiLang ? `${lang}/` : "";
+    let firstFrameUrl = `https://medien-antami.b-cdn.net/PNG%20sequences/${animationName}/${langPlaceholder}${baseFilename}${String(
       1
     ).padStart(pad, "0")}.png`;
 

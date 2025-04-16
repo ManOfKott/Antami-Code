@@ -80,6 +80,7 @@ function initPixiAnimation({
     anim.loop = true;
     anim.visible = false; // ⛔ erst sichtbar machen, wenn bereit
 
+    console.log("Animation loaded:", anim);
     app.stage.addChild(anim);
 
     function scaleAndCenter() {

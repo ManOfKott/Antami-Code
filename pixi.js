@@ -25,10 +25,13 @@ function initPixiAnimation({
     const firstFrameUrl = `https://medien-antami.b-cdn.net/PNG%20sequences/${baseFilename}/${baseFilename}${String(
       1
     ).padStart(pad, "0")}.png`;
+
     const img = new Image();
     img.onload = function () {
       const aspectRatio = img.width / img.height;
-      const containerHeight = container.clientHeight;
+      const containerHeight =
+        container.clientHeight ||
+        parseFloat(getComputedStyle(container).height);
       const containerWidth = containerHeight * aspectRatio;
       container.style.width = `${containerWidth}px`;
 
@@ -47,11 +50,16 @@ function initPixiAnimation({
     const app = new PIXI.Application({
       resizeTo: container,
       backgroundAlpha: 0,
-      resolution: window.devicePixelRatio || 1, // ✅ Add this line
-      autoDensity: true, // ✅ Enables correct scaling
+      resolution: window.devicePixelRatio || 1,
+      autoDensity: true,
     });
 
     container.appendChild(app.view);
+
+    // ⚠️ Verstecke das Canvas bis die Animation bereit ist
+    app.view.style.visibility = "hidden";
+    app.view.style.opacity = "0";
+    app.view.style.transition = "opacity 0.3s ease";
 
     const frames = [];
     for (let i = 1; i <= frameCount; i++) {
@@ -64,7 +72,7 @@ function initPixiAnimation({
     anim.anchor.set(0.5);
     anim.animationSpeed = fps / 60;
     anim.loop = true;
-    anim.play();
+    anim.visible = false; // ⛔ erst sichtbar machen, wenn bereit
 
     app.stage.addChild(anim);
 
@@ -87,15 +95,22 @@ function initPixiAnimation({
       anim.y = canvasHeight / 2;
     }
 
-    // Run once when frame is ready
     anim.onFrameChange = () => {
       if (anim.textures[0].baseTexture.valid) {
         scaleAndCenter();
+        anim.visible = true;
+        anim.play();
+
+        // ✅ Zeige das Canvas jetzt erst
+        requestAnimationFrame(() => {
+          app.view.style.visibility = "visible";
+          app.view.style.opacity = "1";
+        });
+
         anim.onFrameChange = null;
       }
     };
 
-    // Scale again on resize
     app.renderer.on("resize", scaleAndCenter);
   }
 

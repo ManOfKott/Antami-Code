@@ -60,8 +60,6 @@ function initPixiAnimation({
 
     container.appendChild(app.view);
 
-    // Setup container fade styles
-    container.style.transition = "opacity 1s ease";
     container.style.opacity = "0";
 
     const frames = [];
@@ -135,10 +133,10 @@ function initPixiAnimation({
       anim.visible = true;
 
       setTimeout(() => {
-        // ✅ NEU: Kurze Wartezeit
+        container.style.transition = "opacity 1s ease";
         anim.play();
         fadeIn();
-      }, 1500); // ✅ z.B. 1000 Millisekunden warten
+      }, 1500); // ✅ z.B. 1500 Millisekunden warten
     }
 
     if (firstTexture.valid) {

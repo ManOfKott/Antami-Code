@@ -93,6 +93,8 @@ function initPixiAnimation({
       if (!texture.baseTexture.valid) {
         console.error("Texture not valid yet, skipping scaling and centering");
         return;
+      } else {
+        console.log("Texture is valid, proceeding with scaling and centering");
       }
 
       const canvasWidth = app.renderer.screen.width;

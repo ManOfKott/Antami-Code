@@ -9,7 +9,8 @@ function initPixiAnimation({
   interval = 50,
   multiLang = false,
   lang = "ar",
-  disappear = false, // 👈 new parameter
+  disappear = false,
+  initialDelay = 1000,
 }) {
   let attempts = 0;
 
@@ -136,7 +137,7 @@ function initPixiAnimation({
         container.style.transition = "opacity 1s ease";
         anim.play();
         fadeIn();
-      }, 2000); // ✅ z.B. 1500 Millisekunden warten
+      }, initialDelay); // 2 seconds delay before starting the animation
     }
 
     if (firstTexture.valid) {

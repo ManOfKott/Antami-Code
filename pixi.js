@@ -127,23 +127,23 @@ function initPixiAnimation({
       };
     }
 
+    // ✅ Hier Änderung: Animation erst starten, wenn die erste Textur geladen ist!
     const firstTexture = anim.textures[0].baseTexture;
 
-    if (firstTexture.valid) {
+    function startAnimationProperly() {
       scaleAndCenter();
       anim.visible = true;
-      anim.play();
       requestAnimationFrame(() => {
+        anim.play();
         fadeIn();
       });
+    }
+
+    if (firstTexture.valid) {
+      startAnimationProperly(); // ✅
     } else {
       firstTexture.on("loaded", () => {
-        scaleAndCenter();
-        anim.visible = true;
-        anim.play();
-        requestAnimationFrame(() => {
-          fadeIn();
-        });
+        startAnimationProperly(); // ✅
       });
     }
   }

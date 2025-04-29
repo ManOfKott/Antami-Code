@@ -39,6 +39,13 @@ function initPixiAnimation({
       const containerWidth = containerHeight * aspectRatio;
       container.style.width = `${containerWidth}px`;
 
+      console.log(
+        `Container height set to ${containerHeight}px based on aspect ratio ${aspectRatio}`
+      );
+      console.log(
+        `Container width set to ${containerWidth}px based on aspect ratio ${aspectRatio}`
+      );
+
       startPixi(container);
     };
     img.onerror = function () {
@@ -70,7 +77,6 @@ function initPixiAnimation({
       const frameNumber = String(i).padStart(pad, "0");
       const langPlaceholder = multiLang ? `${lang}/` : "";
       const url = `https://medien-antami.b-cdn.net/PNG%20sequences/${animationName}/${langPlaceholder}${baseFilename}${frameNumber}.png`;
-      console.log("Loading frame:", url);
       frames.push(PIXI.Texture.from(url));
     }
 

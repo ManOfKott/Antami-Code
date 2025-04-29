@@ -94,17 +94,19 @@ function initPixiAnimation({
 
       const canvasWidth = app.renderer.screen.width;
       const canvasHeight = app.renderer.screen.height;
-
       const frameWidth = texture.orig.width;
       const frameHeight = texture.orig.height;
+      console.log(
+        `Frame size: ${frameWidth}x${frameHeight}, Canvas size: ${canvasWidth}x${canvasHeight}`
+      );
 
       const scaleX = canvasWidth / frameWidth;
       const scaleY = canvasHeight / frameHeight;
       const scale = Math.min(scaleX, scaleY);
 
       anim.scale.set(scale);
-      anim.x = canvasWidth / 2;
-      anim.y = canvasHeight / 2;
+      // anim.x = canvasWidth / 2;
+      // anim.y = canvasHeight / 2;
     }
 
     app.renderer.on("resize", scaleAndCenter);

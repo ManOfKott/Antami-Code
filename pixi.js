@@ -88,6 +88,7 @@ function initPixiAnimation({
     app.stage.addChild(anim);
 
     function scaleAndCenter() {
+      console.log("Scaling and centering animation");
       const texture = anim.textures[0];
       if (!texture.baseTexture.valid) return;
 
@@ -114,6 +115,7 @@ function initPixiAnimation({
 
     // Show the canvas once ready
     requestAnimationFrame(() => {
+      console.log("Animation is ready, showing canvas");
       app.view.style.visibility = "visible";
       app.view.style.opacity = "1";
     });

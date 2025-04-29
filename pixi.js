@@ -110,6 +110,7 @@ function initPixiAnimation({
     }
 
     anim.onFrameChange = () => {
+      console.log("Frame changed:", anim.currentFrame);
       if (anim.textures[0].baseTexture.valid) {
         console.log("Animation is ready to play. Making it visible now.");
         scaleAndCenter();

@@ -136,7 +136,7 @@ function initPixiAnimation({
         container.style.transition = "opacity 1s ease";
         anim.play();
         fadeIn();
-      }, 1500); // ✅ z.B. 1500 Millisekunden warten
+      }, 2000); // ✅ z.B. 1500 Millisekunden warten
     }
 
     if (firstTexture.valid) {

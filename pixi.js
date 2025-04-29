@@ -1,4 +1,4 @@
-function initPixiAnimation({
+function initPixiAnimationWithOptionalFade({
   frameCount,
   baseFilename,
   animationName,
@@ -9,6 +9,7 @@ function initPixiAnimation({
   interval = 50,
   multiLang = false,
   lang = "ar",
+  disappear = false, // 👈 new parameter
 }) {
   let attempts = 0;
 
@@ -38,13 +39,6 @@ function initPixiAnimation({
       const containerWidth = containerHeight * aspectRatio;
       container.style.width = `${containerWidth}px`;
 
-      console.log(
-        `Container height set to ${containerHeight}px based on aspect ratio ${aspectRatio}`
-      );
-      console.log(
-        `Container width set to ${containerWidth}px based on aspect ratio ${aspectRatio}`
-      );
-
       startPixi(container);
     };
     img.onerror = function () {
@@ -66,10 +60,9 @@ function initPixiAnimation({
 
     container.appendChild(app.view);
 
-    // Hide the canvas until ready
-    app.view.style.visibility = "hidden";
-    app.view.style.opacity = "0";
-    app.view.style.transition = "opacity 0.3s ease";
+    // Setup container fade styles
+    container.style.transition = "opacity 1s ease";
+    container.style.opacity = "0";
 
     const frames = [];
     for (let i = 1; i <= frameCount; i++) {
@@ -82,63 +75,77 @@ function initPixiAnimation({
     const anim = new PIXI.AnimatedSprite(frames);
     anim.anchor.set(0.5);
     anim.animationSpeed = fps / 60;
-    anim.loop = true;
+    anim.loop = !disappear; // 👈 important: loop normally if no disappear
     anim.visible = false;
 
     app.stage.addChild(anim);
 
     function scaleAndCenter() {
-      console.log("Scaling and centering animation");
       const texture = anim.textures[0];
       if (!texture.baseTexture.valid) {
         console.error("Texture not valid yet, skipping scaling and centering");
         return;
-      } else {
-        console.log("Texture is valid, proceeding with scaling and centering");
       }
 
       const canvasWidth = app.renderer.screen.width;
       const canvasHeight = app.renderer.screen.height;
       const frameWidth = texture.orig.width;
       const frameHeight = texture.orig.height;
-      console.log(
-        `Frame size: ${frameWidth}x${frameHeight}, Canvas size: ${canvasWidth}x${canvasHeight}`
-      );
 
       const scaleX = canvasWidth / frameWidth;
       const scaleY = canvasHeight / frameHeight;
       const scale = Math.min(scaleX, scaleY);
 
-      console.log(`Scale: ${scale}`);
       anim.scale.set(scale);
-
       anim.x = canvasWidth / 2;
       anim.y = canvasHeight / 2;
     }
 
     app.renderer.on("resize", scaleAndCenter);
 
-    // Start playing the animation immediately
-    anim.play();
-    anim.visible = true;
+    // Fade control logic
+    function fadeOut() {
+      container.style.opacity = "0";
+    }
 
-    // Wait for first texture to be ready before scaling
+    function fadeIn() {
+      container.style.opacity = "1";
+    }
+
+    function waitAndRestart() {
+      setTimeout(() => {
+        anim.gotoAndPlay(0);
+        fadeIn();
+      }, 7000); // 7 seconds
+    }
+
+    if (disappear) {
+      anim.loop = false;
+      anim.onComplete = () => {
+        fadeOut();
+        waitAndRestart();
+      };
+    }
+
     const firstTexture = anim.textures[0].baseTexture;
 
     if (firstTexture.valid) {
       scaleAndCenter();
+      anim.visible = true;
+      anim.play();
+      requestAnimationFrame(() => {
+        fadeIn();
+      });
     } else {
       firstTexture.on("loaded", () => {
         scaleAndCenter();
+        anim.visible = true;
+        anim.play();
+        requestAnimationFrame(() => {
+          fadeIn();
+        });
       });
     }
-
-    // Show the canvas once ready
-    requestAnimationFrame(() => {
-      console.log("Animation is ready, showing canvas");
-      app.view.style.visibility = "visible";
-      app.view.style.opacity = "1";
-    });
   }
 
   tryStart();

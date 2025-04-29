@@ -133,10 +133,12 @@ function initPixiAnimation({
     function startAnimationProperly() {
       scaleAndCenter();
       anim.visible = true;
-      requestAnimationFrame(() => {
+
+      setTimeout(() => {
+        // ✅ NEU: Kurze Wartezeit
         anim.play();
         fadeIn();
-      });
+      }, 300); // ✅ z.B. 300 Millisekunden warten
     }
 
     if (firstTexture.valid) {

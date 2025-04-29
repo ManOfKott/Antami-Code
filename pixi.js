@@ -90,6 +90,7 @@ function initPixiAnimation({
     app.stage.addChild(anim);
 
     function scaleAndCenter() {
+      console.log("Scaling and centering animation");
       const texture = anim.textures[0];
       if (!texture.baseTexture.valid) return;
 
@@ -110,6 +111,7 @@ function initPixiAnimation({
 
     anim.onFrameChange = () => {
       if (anim.textures[0].baseTexture.valid) {
+        console.log("Animation is ready to play. Making it visible now.");
         scaleAndCenter();
         anim.visible = true;
         anim.play();

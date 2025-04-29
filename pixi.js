@@ -105,8 +105,8 @@ function initPixiAnimation({
       const scale = Math.min(scaleX, scaleY);
 
       anim.scale.set(scale);
-      // anim.x = canvasWidth / 2;
-      // anim.y = canvasHeight / 2;
+      anim.x = -1 * (canvasWidth / 2);
+      anim.y = -1 * (canvasHeight / 2);
     }
 
     app.renderer.on("resize", scaleAndCenter);

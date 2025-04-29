@@ -90,7 +90,10 @@ function initPixiAnimation({
     function scaleAndCenter() {
       console.log("Scaling and centering animation");
       const texture = anim.textures[0];
-      if (!texture.baseTexture.valid) return;
+      if (!texture.baseTexture.valid) {
+        console.error("Texture not valid yet, skipping scaling and centering");
+        return;
+      }
 
       const canvasWidth = app.renderer.screen.width;
       const canvasHeight = app.renderer.screen.height;

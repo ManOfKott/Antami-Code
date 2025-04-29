@@ -1,4 +1,4 @@
-function initPixiAnimationWithOptionalFade({
+function initPixiAnimation({
   frameCount,
   baseFilename,
   animationName,

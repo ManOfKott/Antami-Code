@@ -112,7 +112,6 @@ function initPixiAnimation({
       console.log(`Scale: ${scale}`);
       anim.scale.set(scale);
 
-      console.log(`Animation size after scaling: ${anim.width}x${anim.height}`);
       anim.x = canvasWidth / 2;
       anim.y = canvasHeight / 2;
     }

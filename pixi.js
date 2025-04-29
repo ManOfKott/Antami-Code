@@ -115,8 +115,8 @@ function initPixiAnimation({
       console.log(
         `Animation position before centering: x=${anim.x}, y=${anim.y}`
       );
-      anim.x = canvasWidth / 2;
-      anim.y = canvasHeight / 2;
+      // anim.x = canvasWidth / 2;
+      // anim.y = canvasHeight / 2;
       console.log(
         `Animation position after centering: x=${anim.x}, y=${anim.y}`
       );

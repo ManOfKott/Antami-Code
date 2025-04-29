@@ -104,9 +104,17 @@ function initPixiAnimation({
       const scaleY = canvasHeight / frameHeight;
       const scale = Math.min(scaleX, scaleY);
 
+      console.log(`Scale: ${scale}`);
       anim.scale.set(scale);
+
+      console.log(
+        `Animation position before centering: x=${anim.x}, y=${anim.y}`
+      );
       anim.x = -1 * (canvasWidth / 2);
       anim.y = -1 * (canvasHeight / 2);
+      console.log(
+        `Animation position after centering: x=${anim.x}, y=${anim.y}`
+      );
     }
 
     app.renderer.on("resize", scaleAndCenter);

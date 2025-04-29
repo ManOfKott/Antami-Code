@@ -24,9 +24,8 @@ function initPixiAnimation({
       return;
     }
 
-    // Load first frame to get aspect ratio and set width
     const langPlaceholder = multiLang ? `${lang}/` : "";
-    let firstFrameUrl = `https://medien-antami.b-cdn.net/PNG%20sequences/${animationName}/${langPlaceholder}${baseFilename}${String(
+    const firstFrameUrl = `https://medien-antami.b-cdn.net/PNG%20sequences/${animationName}/${langPlaceholder}${baseFilename}${String(
       1
     ).padStart(pad, "0")}.png`;
 
@@ -67,7 +66,7 @@ function initPixiAnimation({
 
     container.appendChild(app.view);
 
-    // ⚠️ Verstecke das Canvas bis die Animation bereit ist
+    // Hide the canvas until ready
     app.view.style.visibility = "hidden";
     app.view.style.opacity = "0";
     app.view.style.transition = "opacity 0.3s ease";
@@ -84,13 +83,11 @@ function initPixiAnimation({
     anim.anchor.set(0.5);
     anim.animationSpeed = fps / 60;
     anim.loop = true;
-    anim.visible = false; // ⛔ erst sichtbar machen, wenn bereit
+    anim.visible = true;
 
-    console.log("Animation loaded:", anim);
     app.stage.addChild(anim);
 
     function scaleAndCenter() {
-      console.log("Scaling and centering animation");
       const texture = anim.textures[0];
       if (!texture.baseTexture.valid) return;
 
@@ -109,25 +106,17 @@ function initPixiAnimation({
       anim.y = canvasHeight / 2;
     }
 
-    anim.onFrameChange = () => {
-      console.log("Frame changed:", anim.currentFrame);
-      if (anim.textures[0].baseTexture.valid) {
-        console.log("Animation is ready to play. Making it visible now.");
-        scaleAndCenter();
-        anim.visible = true;
-        anim.play();
-
-        // ✅ Zeige das Canvas jetzt erst
-        requestAnimationFrame(() => {
-          app.view.style.visibility = "visible";
-          app.view.style.opacity = "1";
-        });
-
-        anim.onFrameChange = null;
-      }
-    };
-
     app.renderer.on("resize", scaleAndCenter);
+
+    // Start playing the animation immediately
+    anim.play();
+    scaleAndCenter();
+
+    // Show the canvas once ready
+    requestAnimationFrame(() => {
+      app.view.style.visibility = "visible";
+      app.view.style.opacity = "1";
+    });
   }
 
   tryStart();

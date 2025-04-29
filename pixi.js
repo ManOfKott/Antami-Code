@@ -83,7 +83,7 @@ function initPixiAnimation({
     anim.anchor.set(0.5);
     anim.animationSpeed = fps / 60;
     anim.loop = true;
-    anim.visible = true;
+    anim.visible = false;
 
     app.stage.addChild(anim);
 
@@ -126,7 +126,18 @@ function initPixiAnimation({
 
     // Start playing the animation immediately
     anim.play();
-    scaleAndCenter();
+    anim.visible = true;
+
+    // Wait for first texture to be ready before scaling
+    const firstTexture = anim.textures[0].baseTexture;
+
+    if (firstTexture.valid) {
+      scaleAndCenter();
+    } else {
+      firstTexture.on("loaded", () => {
+        scaleAndCenter();
+      });
+    }
 
     // Show the canvas once ready
     requestAnimationFrame(() => {

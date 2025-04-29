@@ -138,7 +138,7 @@ function initPixiAnimation({
         // ✅ NEU: Kurze Wartezeit
         anim.play();
         fadeIn();
-      }, 300); // ✅ z.B. 300 Millisekunden warten
+      }, 1000); // ✅ z.B. 1000 Millisekunden warten
     }
 
     if (firstTexture.valid) {

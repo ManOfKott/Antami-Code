@@ -147,7 +147,48 @@ function initPixiAnimation({
         startAnimationProperly(); // ✅
       });
     }
+
+    return app;
   }
 
   tryStart();
+}
+
+function setupPixiAnimationWithLangSupport(animationConfig) {
+  const { multiLang } = animationConfig;
+
+  // Store current Pixi Application to destroy it on lang change
+  let currentApp = null;
+
+  // Wrapper to safely destroy previous app instance
+  function destroyPreviousAnimation(containerId) {
+    const container = document.getElementById(containerId);
+    if (container && container.firstChild) {
+      container.innerHTML = "";
+    }
+    if (currentApp) {
+      currentApp.destroy(true, { children: true });
+      currentApp = null;
+    }
+  }
+
+  // Initialize animation with current language
+  function loadAnimation(lang) {
+    const configWithLang = { ...animationConfig, lang };
+    destroyPreviousAnimation(animationConfig.containerId);
+    currentApp = initPixiAnimation(configWithLang);
+  }
+
+  // Initial load
+  const initialLang = multiLang
+    ? Weglot.getCurrentLang()
+    : animationConfig.lang;
+  loadAnimation(initialLang);
+
+  // If multiLang, setup language change listener
+  if (multiLang) {
+    Weglot.on("languageChanged", (newLang) => {
+      loadAnimation(newLang);
+    });
+  }
 }

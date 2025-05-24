@@ -11,7 +11,12 @@ function initPixiAnimation({
   lang = "ar",
   disappear = false,
   initialDelay = 1000,
+  active = true,
 }) {
+  if (!active) {
+    console.warn("Pixi animation is disabled.");
+    return;
+  }
   let attempts = 0;
 
   function tryStart() {

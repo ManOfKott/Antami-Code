@@ -29,7 +29,7 @@ function initPixiAnimation({
     const langPlaceholder = multiLang ? `${lang}/` : "";
     const firstFrameUrl = `https://medien-antami.b-cdn.net/PNG%20sequences/${animationName}/${langPlaceholder}${baseFilename}${String(
       1
-    ).padStart(pad, "0")}.png`;
+    ).padStart(pad, "1")}.png`;
 
     const img = new Image();
     img.onload = function () {

@@ -67,7 +67,6 @@ const reloadVideos = () => {
 };
 
 const fixElementAlignment = (direction) => {
-  return;
   console.log("runAlignmentFix invoked");
   const elements = document.querySelectorAll("*");
 

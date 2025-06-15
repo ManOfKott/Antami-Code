@@ -1,0 +1,35 @@
+<div class="mail-wrapper" style="width:100%; background-color:#f9f9f9; padding:20px; font-family:'Arial', sans-serif;">
+    <div class="mail"
+        style="max-width:600px; margin:0 auto; background-color:#ffffff; padding:30px; border-radius:8px;">
+
+        <!-- Logo Section -->
+        <div class="mail-logo-container" style="margin-bottom:20px;">
+            <div class="mail-logo-wrapper">
+                {{logo}}
+            </div>
+        </div>
+
+        <!-- Main Message -->
+        <p style="font-family: 'Tajawal', Tahoma, Arial, sans-serif; direction: rtl; text-align: right;" lang="ar">
+            عزيزي/عزيزتي <b>{{name}}</b>،
+        </p>
+        
+        <p style="font-family: 'Tajawal', Tahoma, Arial, sans-serif; direction: rtl; text-align: right;" lang="ar">
+            لديك رسالة جديدة في {{school_name}} من {{from}}.
+        </p>
+        
+        <p style="font-family: 'Tajawal', Tahoma, Arial, sans-serif; direction: rtl; text-align: right;" lang="ar">
+            {{message}}
+        </p>
+        
+        <p style="font-family: 'Tajawal', Tahoma, Arial, sans-serif; direction: rtl; text-align: right;" lang="ar">
+            يُرجى <a href="{{inbox}}">الضغط هنا لعرض الرسالة</a>.
+        </p>
+          
+        <!-- Closing Signature -->
+        <p style="margin-top:30px; font-size:16px; font-family:'Tajawal', sans-serif;">
+            {{mail_signature}}
+        </p>
+    </div>
+</div>
+  
